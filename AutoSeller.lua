@@ -1466,12 +1466,12 @@ function SYH:Sell (only_gray)
 								if (SYH.SellPanel.ForceSellSoulbound or not SYH:IsSoulbound (backpack, slot)) then
 									if (itemLevel > 5) then
 										local itemType, itemID, enchantID, gemID1, gemID2, gemID3, gemID4, suffixID, uniqueID, linkLevel, specializationID, upgradeTypeID, instanceDifficultyID, numBonuses, affixes = strsplit (":", itemLink)
-										if (upgradeTypeID ~= "512") then --> isn't timewarped
+										if (upgradeTypeID ~= "1") then --> isn't timewarped
 											if (not SYH.db.profile.ReverseSell) then
 												local auction_value = SYH:GetAuctionPrice (itemLink)
 												if (auction_value < auction_limit) then
 													local valor = itemSellPrice
-													if ((itemLevel < SYH.db.profile.SellGreenMaxLevel) or (valor > (SYH.db.profile.SellVendorThreshold * 10000))) then
+													if ((itemLevel < SYH.db.profile.SellGreenMaxLevel) and (valor > (SYH.db.profile.SellVendorThreshold * 10000))) then
 														to_sell [#to_sell+1] = {backpack, slot, valor, false, amountOfItems}
 													end
 												else
@@ -1480,7 +1480,7 @@ function SYH:Sell (only_gray)
 											else	
 												if (SYH:GetAuctionPrice (itemLink) < auction_limit) then
 													local valor = itemSellPrice
-													if ((itemLevel > SYH.db.profile.SellGreenMaxLevel) or (valor > (SYH.db.profile.SellVendorThreshold * 10000))) then
+													if ((itemLevel > SYH.db.profile.SellGreenMaxLevel) and (valor > (SYH.db.profile.SellVendorThreshold * 10000))) then
 														to_sell [#to_sell+1] = {backpack, slot, valor, false, amountOfItems}
 													end
 												end
