@@ -1434,6 +1434,7 @@ function SYH:Sell (only_gray)
 			local itemId = GetContainerItemID (backpack, slot)
 			if (itemId and not ignore_list [itemId]) then
 				local _, amountOfItems, _, quality, _, _, itemLink = GetContainerItemInfo (backpack, slot)
+				local itemName, itemLink, _, itemLevel, _, itemType, itemSubType, _, itemEquipLoc, _, itemSellPrice = GetItemInfo (itemLink)
 
 				--> gray
 				if (quality == gray_item) then
@@ -1465,7 +1466,7 @@ function SYH:Sell (only_gray)
 							if ((quality == green_item and sell_green) or (quality == blue_item and sell_blue)) then
 								if (SYH.SellPanel.ForceSellSoulbound or not SYH:IsSoulbound (backpack, slot)) then
 									if (itemLevel > 5) then
-										local itemType, itemID, enchantID, gemID1, gemID2, gemID3, gemID4, suffixID, uniqueID, linkLevel, specializationID, upgradeTypeID, instanceDifficultyID, numBonuses, affixes = strsplit (":", itemLink)
+										local _, _, _, _, _, _, _, _, _, _, _, upgradeTypeID = strsplit (":", itemLink)
 										if (upgradeTypeID ~= "1") then --> isn't timewarped
 											if (not SYH.db.profile.ReverseSell) then
 												local auction_value = SYH:GetAuctionPrice (itemLink)
@@ -1475,7 +1476,7 @@ function SYH:Sell (only_gray)
 														to_sell [#to_sell+1] = {backpack, slot, valor, false, amountOfItems}
 													end
 												else
-													print ("Can't sell ", itemName, "AH Threshold.", auction_value, " > ", auction_limit)
+													--print ("Can't sell ", itemName, "AH Threshold.", auction_value, " > ", auction_limit)
 												end
 											else	
 												if (SYH:GetAuctionPrice (itemLink) < auction_limit) then
